@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T.L.E. Interactive Review Quiz (1-50)</title>
+    <title>Complete T.L.E. Reviewer Quiz (1-115)</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -32,7 +32,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 650px;
+            max-width: 700px;
             padding: 24px;
             box-sizing: border-box;
         }
@@ -194,12 +194,12 @@
 
 <div class="quiz-container">
     <div class="header">
-        <div class="title">T.L.E. Reviewer Interactive Quiz</div>
+        <div class="title">T.L.E. Reviewer Complete Quiz (Lessons 1-4)</div>
         <div class="progress-bar">
             <div class="progress-fill" id="progress"></div>
         </div>
         <div class="stats">
-            <span id="question-count">Question 1 of 50</span>
+            <span id="question-count">Question 1 of 115</span>
             <span id="score-count">Score: 0</span>
         </div>
     </div>
@@ -215,8 +215,8 @@
 
     <div id="results-body" class="results" style="display: none;">
         <h2>Quiz Completed!</h2>
-        <p>Your final score is:</p>
-        <div class="score-display" id="final-score">0 / 50</div>
+        <p>Your final score across the entire reviewer is:</p>
+        <div class="score-display" id="final-score">0 / 115</div>
         <p id="feedback-message"></p>
         <button class="restart-btn" onclick="restartQuiz()">Try Again</button>
     </div>
@@ -224,56 +224,184 @@
 
 <script>
 const quizData = [
-    { q: "What field of study teaches knowledge, skills, attitudes, and values needed to manage everyday life?", options: ["Social Studies", "Family and Consumer Science", "Economics", "Health Education"], answer: 1, exp: "Family and Consumer Science is an area of study that teaches students how to manage everyday life and improve quality of life." },
-    { q: "What is ecotourism primarily focused on?", options: ["Shopping and local food", "Nature conservation and community well-being", "Outdoor extreme sports", "Luxury resort stays"], answer: 1, exp: "Ecotourism protects the environment, focuses on nature conservation, and improves the well-being of local communities." },
-    { q: "Travelling to experience the culture, traditions, and way of life of local people is called:", options: ["Adventure Tourism", "Ecotourism", "Cultural Tourism", "Domestic Tourism"], answer: 2, exp: "Cultural Tourism focuses on experiencing traditions, history, arts, and local customs." },
-    { q: "What component of tourism is known as the 'why' of travel?", options: ["Accessibility", "Accommodation", "Amenities", "Attraction"], answer: 3, exp: "Attractions are the primary drivers that motivate a tourist to leave home." },
-    { q: "Beaches, mountains, and lakes fall under which attraction type?", options: ["Man-made", "Natural", "Event-based", "Cultural"], answer: 1, exp: "Natural attractions include geographic features like beaches, mountains, and lakes." },
-    { q: "Which service characteristic means services cannot be seen, touched, or stored?", options: ["Inseparability", "Intangibility", "Variability", "Perishability"], answer: 1, exp: "Intangibility refers to services that cannot be seen, touched, or stored." },
-    { q: "Which characteristic refers to how service quality may vary depending on the provider or situation?", options: ["Variability", "Perishability", "Intangibility", "Inseparability"], answer: 0, exp: "Variability means the quality of service varies depending on circumstances and providers." },
-    { q: "During which historical period were tourism activities in the Philippines completely stopped due to war?", options: ["Spanish Colonial Period", "American Period", "Pre-colonial Period", "Japanese Occupation"], answer: 3, exp: "During the Japanese Occupation, tourism activities stopped because of war and damaged infrastructure." },
-    { q: "When was the Department of Tourism created?", options: ["June 12, 1898", "May 11, 1973", "October 23, 1953", "September 15, 1898"], answer: 1, exp: "The Department of Tourism was created on May 11, 1973, by President Ferdinand Marcos Sr." },
-    { q: "Which ancient vessel served as the backbone for inter-island trade in early Philippine travel?", options: ["Galleon", "Tranvia", "Balangay", "Calesa"], answer: 2, exp: "Balangay served as the backbone for inter-island trade in early travel." },
-    { q: "What were the Manila-Acapulco Galleons used for?", options: ["Transporting luxury goods between the Philippines and Mexico", "Ocean voyages to navigate by stars", "Inter-city public transit in Manila", "Carrying military troops during WWII"], answer: 0, exp: "Galleons transported luxury goods between the Philippines and Mexico." },
-    { q: "What was the electric streetcar system operated by MERALCO called?", options: ["Calesa", "Tranvia", "Manila-Dagupan Railway", "Balangay"], answer: 1, exp: "Tranvia was an electric streetcar system operated by the Manila Electric Rail and Light Company." },
-    { q: "Which historic walled city was founded in 1571?", options: ["Vigan", "Bagumbayan", "Intramuros", "Malolos"], answer: 2, exp: "Intramuros is the historic walled city founded in 1571." },
-    { q: "Paoay Church is formally known as:", options: ["Our Lady of Mount Carmel Parish", "Church of Saint Augustine", "San Agustin Basilica", "Manila Cathedral"], answer: 1, exp: "Paoay Church is formally known as the Church of Saint Augustine." },
-    { q: "Luneta Park was formerly known as:", options: ["Calle Crisologo", "Corregidor", "Bagumbayan", "Malolos"], answer: 2, exp: "Luneta Park was historically known as Bagumbayan." },
-    { q: "Which historic location has the nickname 'Cradle of Democracy in the East'?", options: ["Barasoain Church", "Intramuros", "Corregidor Island", "Luneta Park"], answer: 0, exp: "Barasoain Church in Malolos holds the title 'Cradle of Democracy in the East'." },
-    { q: "Calle Crisologo in Vigan is known for being:", options: ["The site of the first Philippine Republic", "The best-preserved example of a planned Spanish colonial town in Asia", "A fortress guarding Manila Bay", "A modern entertainment street"], answer: 1, exp: "Calle Crisologo is famous for being the best-preserved example of a planned Spanish colonial town in Asia." },
-    { q: "Corregidor Island surrendered to Japanese troops in which month and year?", options: ["December 1896", "January 1899", "May 1942", "July 1946"], answer: 2, exp: "Japanese troops forced the surrender of Corregidor Island in May 1942." },
-    { q: "Why do the Chocolate Hills in Bohol turn brown?", options: ["Volcanic ash coverage", "During the dry season", "Seasonal mud runoff", "Sun exposure during summer solstice"], answer: 1, exp: "The grass covering the Chocolate Hills turns brown during the dry season." },
-    { q: "What is the Puerto Princesa Underground River's key geographic feature?", options: ["Symmetrical stratovolcano cone", "Subterranean river system", "Nested island-in-a-lake", "Archipelago of 123 islands"], answer: 1, exp: "It features a remarkable subterranean river system." },
-    { q: "How many islands make up the Hundred Islands National Park at high tide?", options: ["100", "123", "124", "150"], answer: 1, exp: "It is composed of 123 islands at high tide (and 124 at low tide)." },
-    { q: "Philippines Independence Day was proclaimed by General Emilio Aguinaldo in Kawit, Cavite on:", options: ["July 4, 1946", "May 11, 1973", "June 12, 1898", "September 15, 1898"], answer: 2, exp: "Independence from Spanish colonial rule was proclaimed on June 12, 1898." },
-    { q: "When was television officially introduced in the Philippines with DZAQ-TV Channel 3?", options: ["October 23, 1953", "July 4, 1946", "June 27, 2023", "May 11, 1973"], answer: 0, exp: "Television was introduced on October 23, 1953 via DZAQ-TV Channel 3." },
-    { q: "Which government agency collects travel tax and manages tourism enterprise zones?", options: ["Tourism Promotions Board (TPB)", "Department of Transportation (DOTr)", "Intramuros Administration (IA)", "Tourism Infrastructure and Enterprise Zone Authority (TIEZA)"], answer: 3, exp: "TIEZA collects travel tax and develops tourism enterprise zones." },
-    { q: "Which agency promotes Philippine tourism internationally and manages marketing campaigns?", options: ["Local Government Units (LGUs)", "Tourism Promotions Board (TPB)", "Bureau of Immigration", "NCCA"], answer: 1, exp: "The Tourism Promotions Board (TPB) markets the Philippines internationally." },
-    { q: "A personal assistant for hotel guests who assists with information and requests is a:", options: ["Concierge", "Bell Boy", "Front Desk Officer", "Steward"], answer: 0, exp: "A Concierge provides information and acts as a personal assistant for hotel guests." },
-    { q: "Who is the head officer in command of a cruise ship?", options: ["Deck Officer", "Captain", "Chief Engineer", "Steward"], answer: 1, exp: "The Captain commands the ship." },
-    { q: "Who manages, preserves, and organizes collections of historical objects and artworks in a museum?", options: ["Tour Operator", "Event Coordinator", "Museum Curator", "Ticketing Officer"], answer: 2, exp: "A Museum Curator manages and preserves museum collections." },
-    { q: "What is the official currency of Indonesia?", options: ["Baht", "Rupiah", "Yuan", "Kyat"], answer: 1, exp: "The official currency of Indonesia is the Indonesian Rupiah." },
-    { q: "Which temple in Central Java is recognized as the largest Buddhist temple in the world?", options: ["Fushimi Inari", "Shwedagon Pagoda", "Borobudur Temple", "Taj Mahal"], answer: 2, exp: "Borobudur Temple in Central Java is the largest Buddhist temple in the world." },
-    { q: "What is the centerpiece animal of Komodo National Park?", options: ["Komodo Dragon", "Asian Elephant", "Bengal Tiger", "Giant Panda"], answer: 0, exp: "The Komodo Dragon is the centerpiece species of Komodo National Park." },
-    { q: "What is practiced during the Hindu New Year festival of Nyepi in Bali?", options: ["Water fights", "Dragon boat racing", "Practice of silence", "Lantern flying"], answer: 2, exp: "Nyepi is known as the 'Day of Silence' where people practice silence." },
-    { q: "What is the capital city of Thailand?", options: ["Jakarta", "Bangkok", "Beijing", "Naypyidaw"], answer: 1, exp: "Bangkok (Krung Thep Maha Nakhon) is the capital of Thailand." },
-    { q: "What is the traditional Thai greeting called?", options: ["Wai", "Zongzi", "Hanami", "Diyas"], answer: 0, exp: "The Wai is performed by placing palms together and slightly bowing." },
-    { q: "Which island is known as the 'Pearl of the Andaman'?", options: ["Bali", "Phuket", "Shikoku", "Inle Lake"], answer: 1, exp: "Phuket is Thailand's largest island and is referred to as the 'Pearl of the Andaman'." },
-    { q: "The Grand Palace in Bangkok was built in 1782 by:", options: ["Father Antonio Estravillo", "King Rama I", "Emperor Qin Shi Huang", "Antonio Quirino"], answer: 1, exp: "The Grand Palace was built in 1782 by King Rama I." },
-    { q: "Songkran is a famous festival in Thailand celebrated every April to welcome:", options: ["The Autumn Harvest", "The Thai New Year", "The Monsoon Season", "The Lunar New Year"], answer: 1, exp: "Songkran is a water festival celebrated in April to welcome the Thai New Year." },
-    { q: "What is the official language of China?", options: ["Cantonese", "Standard Mandarin Chinese", "Hokkien", "Taiwanese"], answer: 1, exp: "The official language of China is Standard Mandarin Chinese." },
-    { q: "How many life-sized clay soldiers were built in the Terracotta Army to guard Qin Shi Huang's tomb?", options: ["More than 1,000", "More than 5,000", "More than 8,000", "More than 12,000"], answer: 2, exp: "The Terracotta Army consists of more than 8,000 life-sized clay soldiers." },
-    { q: "What traditional food item is eaten during the Dragon Boat Festival?", options: ["Pongal", "Zongzi", "Sushi", "Kimchi"], answer: 1, exp: "Zongzi (sticky rice dumplings) are traditional during the Dragon Boat Festival." },
-    { q: "What are the four main islands of Japan?", options: ["Honshu, Hokkaido, Kyushu, Shikoku", "Tokyo, Kyoto, Hiroshima, Osaka", "Bali, Java, Sumatra, Komodo", "Luzon, Visayas, Mindanao, Palawan"], answer: 0, exp: "Japan's four main islands are Honshu, Hokkaido, Kyushu, and Shikoku." },
-    { q: "Which iconic Japanese shrine in Kyoto is famous for thousands of red torii gates?", options: ["Borobudur", "Fushimi Inari Taisha", "Shwedagon Pagoda", "Barasoain"], answer: 1, exp: "Fushimi Inari Taisha in Kyoto is famous for its thousands of bright red torii gates." },
-    { q: "What seasonal activity is celebrated during the Hanami Festival in Japan?", options: ["Hot-air balloon flying", "Viewing blooming cherry blossoms", "Floating lanterns on rivers", "Throwing colored powders"], answer: 1, exp: "Hanami is a spring tradition centered on viewing blooming cherry blossoms." },
-    { q: "What is the official capital of Myanmar?", options: ["Yangon", "Mandalay", "Naypyidaw", "New Delhi"], answer: 2, exp: "Naypyidaw is the official capital of Myanmar." },
-    { q: "Which famous pagoda in Myanmar is covered in pure gold?", options: ["Borobudur", "Shwedagon Pagoda", "Fushimi Inari", "Taj Mahal"], answer: 1, exp: "Shwedagon Pagoda in Yangon is covered in pure gold." },
-    { q: "During the Tazaungdaing Festival in Myanmar, people celebrate with:", options: ["Hot-air balloons", "Water splashing", "Dragon races", "Clay statues"], answer: 0, exp: "The Tazaungdaing Festival features hot-air balloons." },
-    { q: "What type of government structure does India operate under?", options: ["Constitutional Monarchy", "Socialist Republic", "Federal Parliamentary Democratic Republic", "Presidential Republic under military rule"], answer: 2, exp: "India is a Federal Parliamentary Democratic Republic." },
-    { q: "In which Indian city is the white marble Taj Mahal located?", options: ["Jaipur", "Agra", "Mumbai", "Gujarat"], answer: 1, exp: "The Taj Mahal is located in Agra, India." },
-    { q: "Jaipur, India is widely known as the:", options: ["City of Angels", "Island of the Gods", "Pink City", "Pearl of the Orient"], answer: 2, exp: "Jaipur is known as the 'Pink City' for its colorful architecture." },
-    { q: "What traditional items are lit during Diwali, the festival of lights?", options: ["Diyas", "Torii", "Zongzi", "Krathong"], answer: 0, exp: "Diwali is celebrated by lighting lamps called diyas." }
+    // LESSON 1: INTRODUCTION TO TOURISM & SERVICES
+    { q: "Which area of study teaches knowledge, skills, attitudes, and values needed to manage everyday life and improve quality of life?", options: ["Social Studies", "Family and Consumer Science", "Economics", "Health Education"], answer: 1, exp: "Family and Consumer Science teaches everyday life skills and focuses on improving quality of life." },
+    { q: "What is defined as the activity of people travelling to places outside their usual environment?", options: ["Hospitality", "Tourism", "Transportation", "Recreation"], answer: 1, exp: "Tourism is travelling to places outside one's usual environment." },
+    { q: "Which type of tourism involves people travelling within their own country, is affordable, and supports the local economy?", options: ["International Tourism", "Domestic Tourism", "Cultural Tourism", "Ecotourism"], answer: 1, exp: "Domestic Tourism refers to travel within one's own country." },
+    { q: "Which type of tourism allows countries to earn foreign income when people travel across national borders?", options: ["Domestic Tourism", "International Tourism", "Adventure Tourism", "Sustainable Tourism"], answer: 1, exp: "International Tourism involves travelling to another country." },
+    { q: "Which form of tourism focuses on environment protection, nature conservation, and local community well-being?", options: ["Adventure Tourism", "Ecotourism", "Cultural Tourism", "Commercial Tourism"], answer: 1, exp: "Ecotourism protects nature and improves community well-being." },
+    { q: "Travelling to experience history, traditions, arts, local customs, and preserve Filipino heritage is known as:", options: ["Ecotourism", "Cultural Tourism", "Domestic Tourism", "Adventure Tourism"], answer: 1, exp: "Cultural Tourism focuses on heritage, arts, history, and customs." },
+    { q: "Which form of tourism involves tourists participating in exciting, challenging, and outdoor physical activities?", options: ["Cultural Tourism", "Adventure Tourism", "Domestic Tourism", "Ecotourism"], answer: 1, exp: "Adventure Tourism features outdoor, physical, and challenging activities." },
+    { q: "What is the group of businesses and services that provide the needs of tourists and travelers called?", options: ["Travel Agency", "Tourism Industry", "Hospitality Sector", "Government Agency"], answer: 1, exp: "The Tourism Industry consists of businesses providing tourist needs." },
+    { q: "What term describes a person who travels to another place for leisure, business, education, religion, or recreation?", options: ["Host", "Tourist", "Tour Guide", "Curator"], answer: 1, exp: "A Tourist travels for leisure, business, education, religion, or recreation." },
+    { q: "What word is defined as warmly welcoming and serving guests with kindness?", options: ["Tourism", "Hospitality", "Accommodation", "Service"], answer: 1, exp: "Hospitality is welcoming and serving guests with kindness." },
+    { q: "What business helps people plan and arrange trips?", options: ["Tour Operator", "Travel Agency", "Department of Tourism", "Hotel Manager"], answer: 1, exp: "A Travel Agency helps plan and arrange trips." },
+    { q: "What is the process of purchasing a seat on a commercial flight called?", options: ["Tour Packaging", "Booking Airline Tickets", "Passport Control", "Hotel Reservation"], answer: 1, exp: "Booking Airline Tickets is buying a seat on a commercial flight." },
+    { q: "What is the act of securing lodging accommodations (including check-in/check-out policies)?", options: ["Hotel Reservations", "Tour Package", "Booking Ticket", "Amenities"], answer: 0, exp: "Hotel Reservations secure lodging accommodations." },
+    { q: "What bundled service combines two or more travel elements into a single purchase?", options: ["Travel Agency", "Tour Packages", "Visa Assistance", "Amenities"], answer: 1, exp: "Tour Packages combine two or more travel elements into one purchase." },
+    { q: "What is an official government identity document that proves your citizenship?", options: ["Visa", "Passport", "Travel Tax Receipt", "ID Card"], answer: 1, exp: "A Passport is an official government identity document proving citizenship." },
+    { q: "What is an official endorsement added to your passport by a foreign government?", options: ["Passport", "Visa", "Ticket", "Permit"], answer: 1, exp: "A Visa is an official endorsement added to a passport." },
+    { q: "Who is the person that assists and informs tourists during their visit?", options: ["Travel Agent", "Tour Guide", "Concierge", "Steward"], answer: 1, exp: "A Tour Guide assists and informs tourists." },
+    { q: "Places visited by tourists are broadly called:", options: ["Accommodations", "Tourist Destinations", "Amenities", "Agencies"], answer: 1, exp: "Tourist Destinations are the places visited by tourists." },
+    { q: "Places where tourists stay during travel are known as:", options: ["Attractions", "Accommodation", "Amenities", "Activities"], answer: 1, exp: "Accommodation refers to lodging places during travel." },
+    { q: "Managing tourism activities responsibly to protect culture and environment is called:", options: ["Adventure Tourism", "Sustainable Tourism", "International Tourism", "Ecotourism"], answer: 1, exp: "Sustainable Tourism manages activities responsibly to preserve culture and environment." },
+    { q: "What tourism aspect is necessary to protect tourists from accidents, crimes, and emergencies?", options: ["Amenities", "Tourism Safety and Security", "Accessibility", "Sustainable Tourism"], answer: 1, exp: "Tourism Safety and Security protects tourists from harm." },
+    
+    // COMPONENTS OF TOURISM
+    { q: "Which component of tourism is known as the 'why' of travel and primary driver that motivates travel?", options: ["Accessibility", "Attraction", "Accommodation", "Amenities"], answer: 1, exp: "Attraction is the main motivation/why of travel." },
+    { q: "Beaches, mountains, and lakes are categorized under which type of attraction?", options: ["Man-made", "Natural", "Event-based", "Cultural"], answer: 1, exp: "Natural attractions are geographical features like mountains, lakes, and beaches." },
+    { q: "Historical landmarks, museums, and theme parks are categorized as:", options: ["Natural attractions", "Man-made attractions", "Event-based attractions", "Accessibility"], answer: 1, exp: "Man-made attractions are built by humans." },
+    { q: "Global events like the Olympics and concerts fall under which attraction type?", options: ["Natural", "Event-based", "Man-made", "Cultural"], answer: 1, exp: "Event-based attractions revolve around scheduled global or major events." },
+    { q: "Which component covers the entire transportation infrastructure needed to reach a destination?", options: ["Attraction", "Accessibility", "Amenities", "Activities"], answer: 1, exp: "Accessibility refers to overall transportation infrastructure." },
+    { q: "Which component represents a place to stay during travel?", options: ["Accommodation", "Amenities", "Activities", "Attraction"], answer: 0, exp: "Accommodation provides a place to stay." },
+    { q: "Which component makes a traveler's stay comfortable, safe, and convenient?", options: ["Activities", "Amenities", "Accessibility", "Attraction"], answer: 1, exp: "Amenities enhance comfort, safety, and convenience." },
+    { q: "Which component represents the active engagement of travelers at a destination?", options: ["Attraction", "Activities", "Amenities", "Accessibility"], answer: 1, exp: "Activities are the active engagements undertaken by tourists." },
+    
+    // TYPES OF TOURISM SERVICES
+    { q: "Which service characteristic states that services cannot be seen, touched, or stored?", options: ["Inseparability", "Intangibility", "Variability", "Perishability"], answer: 1, exp: "Intangibility means services lack physical substance." },
+    { q: "Which characteristic means services are produced and consumed at the exact same time?", options: ["Intangibility", "Inseparability", "Variability", "Perishability"], answer: 1, exp: "Inseparability means production and consumption happen simultaneously." },
+    { q: "Which characteristic means service quality varies depending on who provides it and when?", options: ["Variability", "Perishability", "Intangibility", "Inseparability"], answer: 0, exp: "Variability refers to variations in service performance." },
+    { q: "Which characteristic means unused service capacity cannot be stored or saved for future use?", options: ["Variability", "Perishability", "Inseparability", "Intangibility"], answer: 1, exp: "Perishability means services cannot be inventoried or stored." },
+    
+    // HISTORICAL DEVELOPMENT OF PHILIPPINE TOURISM
+    { q: "During which period did early Filipinos practice simple forms of travel by boat?", options: ["Spanish Colonial", "Pre-colonial", "American Period", "Post-war"], answer: 1, exp: "Pre-colonial period featured simple travel by sea/boat." },
+    { q: "During which period were roads, bridges, churches, and government buildings developed in the Philippines?", options: ["Pre-colonial", "Spanish Colonial", "American Period", "Japanese Occupation"], answer: 1, exp: "Spanish Colonial period introduced colonial roads, bridges, and churches." },
+    { q: "Which historical period brought modernization, improved transportation, and communication systems?", options: ["Spanish Colonial", "American Period", "Japanese Occupation", "Post-war Period"], answer: 1, exp: "The American Period modernized transport and communication." },
+    { q: "During which period were tourism activities completely stopped due to war and destroyed infrastructure?", options: ["Pre-colonial", "Japanese Occupation", "Spanish Colonial", "American Period"], answer: 1, exp: "Japanese Occupation halted tourism due to WWII destruction." },
+    { q: "Which period focused on rebuilding infrastructure and recognized tourism as an economic contributor?", options: ["American Period", "Post-war Period and Rehabilitation", "Pre-colonial", "Spanish Colonial"], answer: 1, exp: "Post-war Period focused on national rebuilding and economic recovery." },
+    { q: "When was the Department of Tourism created by President Ferdinand Marcos Sr.?", options: ["June 12, 1898", "May 11, 1973", "October 23, 1953", "July 4, 1946"], answer: 1, exp: "The Department of Tourism was established on May 11, 1973." },
+    
+    // EARLY TRAVEL & TRANSPORTATION
+    { q: "Which ancient boat served as the backbone for inter-island trade and star navigation in early travel?", options: ["Canoe", "Balangay", "Calesa", "Galleon"], answer: 1, exp: "Balangay was the ancient inter-island trading vessel navigated by stars." },
+    { q: "What were developed by ancient Austronesian peoples as the world's first ocean-voyaging ships?", options: ["Balangay", "Canoes", "Galleons", "Tranvia"], answer: 1, exp: "Canoes developed by Austronesians were early ocean-voyaging ships." },
+    { q: "What is a two-wheeled, brightly painted carriage driven by a kutsero called?", options: ["Tranvia", "Calesa", "Balangay", "Galleon"], answer: 1, exp: "A Calesa is a horse-drawn 2-wheeled carriage." },
+    { q: "Which iconic merchant ships were used to transport luxury goods between the Philippines and Mexico?", options: ["Balangay", "Galleons", "Canoes", "Tranvia"], answer: 1, exp: "Galleons were used in the Manila-Acapulco Galleon Trade." },
+    { q: "What was the most significant infrastructure project of its period, connecting northern agricultural provinces to Manila port?", options: ["Tranvia", "Manila-Dagupan Railway", "Intramuros Roadway", "Paoay Highway"], answer: 1, exp: "The Manila-Dagupan Railway connected northern agricultural provinces to Manila port." },
+    { q: "What was the electric streetcar system operated by the Manila Electric Rail and Light Company?", options: ["Calesa", "Tranvia", "Balangay", "Railway"], answer: 1, exp: "Tranvia was the MERALCO-operated electric streetcar system." },
+    { q: "What are the famous '3 B's of the Philippines' listed in Lesson 1?", options: ["Beaches, Mountains, Lakes", "Basketball, Boxing, Beauty Pageant", "Balangay, Barasoain, Bagumbayan", "Bangkok, Bali, Beijing"], answer: 1, exp: "The 3 B's are Basketball, Boxing, and Beauty Pageant." },
+    
+    // LESSON 2: EARLY ATTRACTIONS & HISTORICAL SITES
+    { q: "Which historic walled city was founded in 1571 and recognized as a National Cultural Treasure?", options: ["Calle Crisologo", "Intramuros", "Bagumbayan", "Malolos"], answer: 1, exp: "Intramuros is the 1571 walled city in Manila." },
+    { q: "Paoay Church in Ilocos Norte, completed in 1710, was founded by which priest?", options: ["Father Emilio Aguinaldo", "Father Antonio Estravillo", "Father Antonio Quirino", "Father Jose Rizal"], answer: 1, exp: "Paoay Church was founded by Father Antonio Estravillo." },
+    { q: "In what year was Paoay Church added to the UNESCO World Heritage List?", options: ["1571", "1710", "1993", "1896"], answer: 2, exp: "Paoay Church joined the UNESCO World Heritage List in 1993." },
+    { q: "Luneta Park, formally known as Bagumbayan, is famous for the execution of Jose Rizal on what date?", options: ["June 12, 1898", "December 30, 1896", "May 11, 1973", "January 1899"], answer: 1, exp: "Jose Rizal was executed at Bagumbayan on December 30, 1896." },
+    { q: "Which church hosted the First Philippine Congress and the inauguration of the First Philippine Republic?", options: ["Paoay Church", "Barasoain Church", "San Agustin Church", "Manila Cathedral"], answer: 1, exp: "Barasoain Church in Malolos hosted the First Philippine Congress." },
+    { q: "Barasoain Church in Malolos holds which historic nickname?", options: ["Walled City", "Cradle of Democracy in the East", "Pink City", "Pearl of the Orient"], answer: 1, exp: "Barasoain Church is known as the 'Cradle of Democracy in the East'." },
+    { q: "When was Asia's first constitutional republic (Malolos Constitution) ratified?", options: ["June 12, 1898", "September 15, 1898", "January 1899", "May 1942"], answer: 2, exp: "The Malolos Constitution was ratified in January 1899." },
+    { q: "Calle Crisologo in Vigan is famous for being:", options: ["The execution site of Rizal", "The best-preserved example of a planned Spanish colonial town in Asia", "An island fortress in Manila Bay", "A subterranean river system"], answer: 1, exp: "Calle Crisologo is the best-preserved planned Spanish colonial town in Asia." },
+    { q: "In what month and year did Japanese troops force the surrender of Corregidor Island?", options: ["December 1896", "May 1942", "July 1946", "May 1973"], answer: 1, exp: "Corregidor surrendered to Japanese forces in May 1942." },
+    { q: "What causes the grass-covered limestone Chocolate Hills in Bohol to turn brown?", options: ["Volcanic eruption", "Dry season", "Heavy rainfall", "High tide"], answer: 1, exp: "The grass on the Chocolate Hills turns brown during the dry season." },
+    { q: "Mayon Volcano in Albay is globally renowned for which physical feature?", options: ["Subterranean river", "Nested island-in-a-lake", "Remarkably symmetrical cone", "123 islands"], answer: 2, exp: "Mayon Volcano is famous for its remarkably symmetrical cone." },
+    { q: "What major natural landmark is protected within PPSRNP on Palawan island?", options: ["Taal Volcano", "Puerto Princesa Underground River", "Hundred Islands", "Chocolate Hills"], answer: 1, exp: "The Puerto Princesa Underground River is located in Palawan." },
+    { q: "How many islands make up the Hundred Islands National Park at low tide?", options: ["100", "123", "124", "150"], answer: 2, exp: "Hundred Islands has 123 islands at high tide and 124 at low tide." },
+    { q: "Taal Volcano in Batangas is famous for which unique geographical feature?", options: ["Symmetrical cone", "Nested 'island-in-a-lake'", "Limestone hills", "Subterranean river"], answer: 1, exp: "Taal Volcano is famous for its nested 'island-in-a-lake' structure." },
+    
+    // AFTER INDEPENDENCE & AGENCIES
+    { q: "General Emilio Aguinaldo proclaimed Philippine independence in Kawit, Cavite on:", options: ["July 4, 1946", "June 12, 1898", "September 15, 1898", "May 11, 1973"], answer: 1, exp: "Independence was declared on June 12, 1898." },
+    { q: "On July 4, 1946, the Philippines gained formal recognition of sovereignty, now called:", options: ["Independence Day", "Philippine Republic Day", "National Heroes Day", "Malolos Day"], answer: 1, exp: "July 4, 1946 is recognized as Philippine Republic Day." },
+    { q: "What was the name of the first newspaper published after independence, initially given away for free?", options: ["The Manila Times", "The Manila Free Philippines", "The Daily Inquirer", "Manila Bulletin"], answer: 1, exp: "The Manila Free Philippines was the first post-independence newspaper." },
+    { q: "When was television introduced in the Philippines with DZAQ-TV Channel 3 by Alto Broadcasting System?", options: ["October 23, 1953", "June 12, 1898", "May 11, 1973", "June 27, 2023"], answer: 0, exp: "Television launched on October 23, 1953 via DZAQ-TV Channel 3." },
+    { q: "Who owned Alto Broadcasting System when DZAQ-TV Channel 3 launched?", options: ["Ferdinand Marcos Sr.", "Antonio Quirino", "Emilio Aguinaldo", "Dita Angara-Mathay"], answer: 1, exp: "Antonio Quirino owned Alto Broadcasting System." },
+    { q: "Which law split the former Department of Trade and Tourism into two separate entities?", options: ["Presidential Decree No. 189", "Malolos Constitution", "Republic Act 1571", "Tourism Act of 1973"], answer: 0, exp: "Presidential Decree No. 189 split Trade and Tourism." },
+    { q: "Who was appointed to lead the Department of Tourism in April 2026?", options: ["Antonio Quirino", "Dita Angara-Mathay", "Ferdinand Marcos Sr.", "Emilio Aguinaldo"], answer: 1, exp: "Dita Angara-Mathay was appointed DOT head in April 2026." },
+    { q: "On what date was the Philippines' official tourism slogan updated to evolve beyond mere leisure?", options: ["May 11, 1973", "June 27, 2023", "October 23, 1953", "April 15, 2026"], answer: 1, exp: "The slogan update occurred on June 27, 2023." },
+    { q: "Which agency collects travel tax, manages enterprise zones, and develops tourism infrastructure?", options: ["TPB", "TIEZA", "IA", "DOTr"], answer: 1, exp: "TIEZA collects travel tax and manages enterprise zones." },
+    { q: "Which agency markets the Philippines internationally and assists with tourism promotional campaigns?", options: ["TIEZA", "Tourism Promotions Board (TPB)", "Bureau of Immigration", "NCCA"], answer: 1, exp: "TPB promotes Philippine tourism internationally." },
+    { q: "Which specific administration is tasked with protecting and preserving Intramuros?", options: ["Intramuros Administration (IA)", "TIEZA", "TPB", "NCCA"], answer: 0, exp: "Intramuros Administration (IA) preserves Intramuros." },
+    { q: "Which agency manages the entry of foreign tourists into the Philippines?", options: ["DOTr", "Bureau of Immigration", "LGUs", "NCCA"], answer: 1, exp: "Bureau of Immigration oversees tourist entries." },
+    { q: "Which government department focuses on national transportation systems for travelers?", options: ["TIEZA", "Department of Transportation (DOTr)", "TPB", "LGU"], answer: 1, exp: "DOTr focuses on transport infrastructure." },
+    { q: "Which body preserves Philippine arts and culture across the nation?", options: ["National Commission for Culture and Arts (NCCA)", "TPB", "IA", "LGU"], answer: 0, exp: "NCCA preserves arts and culture." },
+    { q: "Which entities promote tourism at the local municipal/city level?", options: ["TPB", "Local Government Units (LGUs)", "TIEZA", "Bureau of Immigration"], answer: 1, exp: "LGUs handle local tourism promotion." },
+    
+    // LESSON 3: CAREER OPPORTUNITIES
+    { q: "A trained and licensed professional who flies an aircraft is a:", options: ["Flight Attendant", "Pilot", "Deck Officer", "Steward"], answer: 1, exp: "A Pilot operates aircraft." },
+    { q: "Who is responsible for ensuring passenger safety, security, and comfort during a flight?", options: ["Pilot", "Flight Attendant", "Ticketing Officer", "Travel Agent"], answer: 1, exp: "Flight Attendants handle passenger safety and comfort." },
+    { q: "Who commands a cruise ship or vessel?", options: ["Deck Officer", "Captain", "Engine Officer", "Steward"], answer: 1, exp: "The Captain commands the ship." },
+    { q: "Which ship crew member assists the captain in vessel navigation?", options: ["Engine Officer", "Deck Officer", "Steward", "Curator"], answer: 1, exp: "Deck Officers assist in navigation." },
+    { q: "Which ship crew members operate and maintain the ship's engines?", options: ["Deck Officers", "Engine Officers", "Stewards", "Security Personnel"], answer: 1, exp: "Engine Officers maintain and operate engines." },
+    { q: "Who cleans cabins and assists passengers on board a ship?", options: ["Stewards/Stewardess", "Deck Officers", "Waiters", "Concierge"], answer: 0, exp: "Stewards/Stewardesses clean cabins and assist passengers." },
+    { q: "A hospitality professional who oversees all daily operations of a hotel is a:", options: ["Front Desk Officer", "Hotel Manager", "Concierge", "Event Coordinator"], answer: 1, exp: "The Hotel Manager manages overall hotel operations." },
+    { q: "Who welcomes guests at the hotel entry area and handles initial check-ins?", options: ["Bell Boy", "Front Desk staff", "Concierge", "Steward"], answer: 1, exp: "Front Desk staff welcome arriving hotel guests." },
+    { q: "Which hotel employee assists guests specifically with carrying their luggage?", options: ["Concierge", "Bell Boy", "Front Desk Officer", "Manager"], answer: 1, exp: "A Bell Boy assists with luggage." },
+    { q: "A personal assistant for hotel guests providing specialized recommendations and information is a:", options: ["Front Desk Officer", "Concierge", "Travel Agent", "Tour Operator"], answer: 1, exp: "A Concierge provides personal assistant services to guests." },
+    { q: "Who oversees the daily operations of a restaurant?", options: ["Chef", "Restaurant Manager", "Barista", "Bartender"], answer: 1, exp: "The Restaurant Manager manages restaurant operations." },
+    { q: "A professional specialized in preparing coffee beverages is a:", options: ["Bartender", "Barista", "Waiter", "Chef"], answer: 1, exp: "A Barista prepares coffee drinks." },
+    { q: "Who prepares and serves both alcoholic and non-alcoholic drinks at a bar?", options: ["Barista", "Bartender", "Steward", "Chef"], answer: 1, exp: "A Bartender serves drinks at a bar." },
+    { q: "Who helps individuals and groups plan, organize, and book travel trips?", options: ["Tour Guide", "Travel Agent", "Museum Curator", "Event Coordinator"], answer: 1, exp: "A Travel Agent helps clients plan and book trips." },
+    { q: "Who creates, packages, organizes, and manages complete tour packages?", options: ["Ticketing Officer", "Tour Operator", "Tour Guide", "Front Desk"], answer: 1, exp: "A Tour Operator designs and manages complete tour packages." },
+    { q: "Who assists customers with booking, issuing, and managing travel tickets?", options: ["Travel Agent", "Ticketing Officer", "Tour Planner", "Concierge"], answer: 1, exp: "A Ticketing Officer issues and manages passenger tickets." },
+    { q: "Who designs detailed daily travel itineraries for trips?", options: ["Ticketing Officer", "Tour Planner", "Museum Curator", "Bell Boy"], answer: 1, exp: "A Tour Planner creates travel itineraries." },
+    { q: "Who manages, preserves, and organizes collections of historical objects and artworks?", options: ["Tour Guide", "Museum Curator", "Event Coordinator", "Theme Park Staff"], answer: 1, exp: "A Museum Curator maintains museum collections." },
+    { q: "Who plans, organizes, and manages events such as festivals, conferences, and conventions?", options: ["Museum Curator", "Event Coordinator", "Tour Guide", "Hotel Manager"], answer: 1, exp: "An Event Coordinator manages events and conferences." },
+
+    // LESSON 4: ASIAN COUNTRIES & DESTINATIONS
+    // INDONESIA
+    { q: "What is the capital city of Indonesia?", options: ["Bali", "Jakarta", "Surabaya", "Central Java"], answer: 1, exp: "Jakarta is the capital of Indonesia." },
+    { q: "What is the official currency of Indonesia?", options: ["Baht", "Indonesian Rupiah", "Yuan", "Kyat"], answer: 1, exp: "The currency of Indonesia is the Indonesian Rupiah." },
+    { q: "What type of government does Indonesia have?", options: ["Constitutional Monarchy", "Presidential Republic", "Socialist Republic", "Federal Republic"], answer: 1, exp: "Indonesia is a Presidential Republic." },
+    { q: "Which Indonesian destination is globally renowned as the 'Island of the Gods'?", options: ["Java", "Bali", "Komodo", "Sumatra"], answer: 1, exp: "Bali is called the 'Island of the Gods'." },
+    { q: "Which temple in Central Java is recognized as the largest Buddhist temple in the world?", options: ["Fushimi Inari", "Borobudur Temple", "Shwedagon Pagoda", "Taj Mahal"], answer: 1, exp: "Borobudur Temple in Central Java is the largest Buddhist temple." },
+    { q: "What centerpiece animal lives in Komodo National Park as the largest living lizard on Earth?", options: ["Bengal Tiger", "Komodo Dragon", "Asian Elephant", "Gecko"], answer: 1, exp: "The Komodo Dragon is the largest living lizard." },
+    { q: "What is practiced during the Hindu New Year festival of Nyepi in Bali?", options: ["Water fights", "Practice of silence", "Dragon boat racing", "Hot-air balloon flying"], answer: 1, exp: "Nyepi is the 'Day of Silence'." },
+    { q: "Which large annual fair in Indonesia features concerts and food exhibits?", options: ["Bali Arts Festival", "Jakarta Fair", "Songkran", "Diwali"], answer: 1, exp: "Jakarta Fair is an annual exhibit and entertainment fair." },
+
+    // THAILAND
+    { q: "What is the official name of Thailand?", options: ["Republic of Thailand", "Kingdom of Thailand", "People's Republic of Thailand", "State of Thailand"], answer: 1, exp: "Thailand's official name is Kingdom of Thailand." },
+    { q: "What is the official currency of Thailand?", options: ["Rupiah", "Thai Baht", "Yuan", "Yen"], answer: 1, exp: "Thailand uses the Thai Baht." },
+    { q: "What form of government does Thailand operate under?", options: ["Presidential Republic", "Constitutional Monarchy", "Socialist Republic", "Military Rule"], answer: 1, exp: "Thailand is a Constitutional Monarchy." },
+    { q: "What is the traditional Thai greeting performed by placing palms together and bowing called?", options: ["Hanami", "Wai", "Zongzi", "Diyas"], answer: 1, exp: "The Wai is the traditional Thai bow/greeting." },
+    { q: "Bangkok (Krung Thep) is widely recognized by what nickname?", options: ["Pink City", "City of Angels", "Pearl of the Andaman", "Walled City"], answer: 1, exp: "Bangkok is called the 'City of Angels'." },
+    { q: "Which tropical island in the Andaman Sea is known as the 'Pearl of the Andaman'?", options: ["Bali", "Phuket", "Bohol", "Shikoku"], answer: 1, exp: "Phuket is known as the 'Pearl of the Andaman'." },
+    { q: "The Grand Palace in Bangkok was built in 1782 by which monarch?", options: ["King Rama I", "Qin Shi Huang", "Emperor Hirohito", "King Bhumibol"], answer: 0, exp: "The Grand Palace was built by King Rama I in 1782." },
+    { q: "What famous water festival is celebrated every April to welcome the Thai New Year?", options: ["Loy Krathong", "Songkran", "Nyepi", "Hanami"], answer: 1, exp: "Songkran is the Thai New Year water festival." },
+
+    // CHINA
+    { q: "What is the official name of China?", options: ["Republic of China", "People's Republic of China", "Imperial China", "Socialist China"], answer: 1, exp: "China's official name is People's Republic of China." },
+    { q: "What is the capital city of China?", options: ["Shanghai", "Beijing", "Guangzhou", "Hong Kong"], answer: 1, exp: "Beijing is the capital of China." },
+    { q: "What is the largest city in China?", options: ["Beijing", "Shanghai", "Xi'an", "Shenzhen"], answer: 1, exp: "Shanghai is the largest city in China." },
+    { q: "What is the official language of China?", options: ["Cantonese", "Standard Mandarin Chinese", "Hokkien", "Taiwanese"], answer: 1, exp: "Standard Mandarin Chinese is the official language." },
+    { q: "What form of government does China have?", options: ["Constitutional Monarchy", "Socialist Republic", "Federal Democracy", "Presidential Republic"], answer: 1, exp: "China is governed as a Socialist Republic." },
+    { q: "Which imperial palace in Beijing was home to 24 emperors during the Ming and Qing Dynasties?", options: ["Grand Palace", "Forbidden City", "Mandalay Palace", "Taj Mahal"], answer: 1, exp: "The Forbidden City housed 24 Ming and Qing emperors." },
+    { q: "How many life-sized clay soldiers were built in the Terracotta Army to guard Emperor Qin Shi Huang's tomb?", options: ["More than 1,000", "More than 5,000", "More than 8,000", "More than 12,000"], answer: 2, exp: "The Terracotta Army contains over 8,000 clay soldiers." },
+    { q: "What traditional sticky rice dumpling is eaten during the Dragon Boat Festival?", options: ["Pongal", "Zongzi", "Sushi", "Bao"], answer: 1, exp: "Zongzi is eaten during the Dragon Boat Festival." },
+    { q: "Which Chinese festival is observed as a time for families to honor their ancestors?", options: ["Spring Festival", "Qingming Festival", "Dragon Boat Festival", "Mid-Autumn Festival"], answer: 1, exp: "Qingming Festival is ancestor-honoring day." },
+
+    // JAPAN
+    { q: "What are the four main islands of Japan?", options: ["Honshu, Hokkaido, Kyushu, Shikoku", "Tokyo, Kyoto, Osaka, Hiroshima", "Luzon, Visayas, Mindanao, Palawan", "Java, Sumatra, Bali, Komodo"], answer: 0, exp: "Japan's 4 main islands are Honshu, Hokkaido, Kyushu, and Shikoku." },
+    { q: "What is the capital and largest city of Japan?", options: ["Kyoto", "Tokyo", "Osaka", "Hiroshima"], answer: 1, exp: "Tokyo is the capital and largest city of Japan." },
+    { q: "What is the currency of Japan?", options: ["Yuan", "Japanese Yen", "Won", "Baht"], answer: 1, exp: "Japan uses the Japanese Yen." },
+    { q: "What system of government does Japan operate under?", options: ["Socialist Republic", "Parliamentary Constitutional Monarchy", "Presidential Republic", "Federal Republic"], answer: 1, exp: "Japan is a Parliamentary Constitutional Monarchy." },
+    { q: "What is Japan's highest and most famous mountain, known for its iconic cone shape?", options: ["Mount Everest", "Mount Fuji", "Mount Mayon", "Mount Apo"], answer: 1, exp: "Mount Fuji is Japan's highest mountain." },
+    { q: "Which famous shrine in Kyoto is renowned for thousands of bright red torii gates?", options: ["Borobudur", "Fushimi Inari Taisha", "Shwedagon Pagoda", "Barasoain"], answer: 1, exp: "Fushimi Inari Taisha features thousands of red torii gates." },
+    { q: "Which site in Japan is dedicated to remembering victims of the atomic bombing?", options: ["Forbidden City", "Hiroshima Peace Memorial Park", "Fushimi Inari", "Mandalay Palace"], answer: 1, exp: "Hiroshima Peace Memorial Park commemorates atomic bomb victims." },
+    { q: "What spring festival tradition in Japan centers around viewing blooming cherry blossoms?", options: ["Tanabata Festival", "Hanami Festival", "Kanda Matsuri", "Songkran"], answer: 1, exp: "Hanami is the cherry blossom viewing festival." },
+    { q: "Which festival in Japan is known as the Star Festival where people write wishes on colorful paper?", options: ["Hanami Festival", "Tanabata Festival", "Kanda Matsuri", "Nyepi"], answer: 1, exp: "Tanabata is the Star Festival." },
+    { q: "Which major festival in Tokyo features traditional grand parades?", options: ["Kanda Matsuri", "Tanabata Festival", "Hanami", "Jakarta Fair"], answer: 0, exp: "Kanda Matsuri is a major parade festival in Tokyo." },
+
+    // MYANMAR
+    { q: "What is the official name of Myanmar?", options: ["Kingdom of Myanmar", "Republic of the Union of Myanmar", "People's Republic of Myanmar", "State of Myanmar"], answer: 1, exp: "Official name: Republic of the Union of Myanmar." },
+    { q: "What is the official capital city of Myanmar?", options: ["Yangon", "Naypyidaw", "Mandalay", "Inle"], answer: 1, exp: "Naypyidaw is the capital of Myanmar." },
+    { q: "What is the largest city in Myanmar?", options: ["Naypyidaw", "Yangon", "Mandalay", "Bangkok"], answer: 1, exp: "Yangon is the largest city in Myanmar." },
+    { q: "What is the official currency of Myanmar?", options: ["Kyat", "Rupiah", "Baht", "Rupee"], answer: 0, exp: "Myanmar's currency is the Myanmar Kyat." },
+    { q: "What type of government currently controls Myanmar according to the reviewer?", options: ["Constitutional Monarchy", "Republic under military rule", "Socialist Republic", "Federal Democracy"], answer: 1, exp: "Myanmar is governed as a Republic under military rule." },
+    { q: "Which famous Buddhist pagoda in Yangon is completely covered in pure gold?", options: ["Borobudur", "Shwedagon Pagoda", "Fushimi Inari", "Taj Mahal"], answer: 1, exp: "Shwedagon Pagoda in Yangon is covered in gold." },
+    { q: "Which freshwater lake in Myanmar is famous for its floating gardens?", options: ["Taal Lake", "Inle Lake", "Andaman Lake", "Bohol Lake"], answer: 1, exp: "Inle Lake is famous for floating gardens." },
+    { q: "Which royal residence was once home to the last Burmese kings?", options: ["Forbidden City", "Mandalay Palace", "Grand Palace", "Intramuros"], answer: 1, exp: "Mandalay Palace housed the last Burmese kings." },
+    { q: "Which traditional festival in Myanmar features hot-air balloons?", options: ["Songkran", "Tazaungdaing Festival", "Kason Full Moon", "Diwali"], answer: 1, exp: "Tazaungdaing Festival features hot-air balloons." },
+    { q: "During which festival do people pour water on sacred Bodhi trees to honor Buddha?", options: ["Shwedagon Festival", "Kason Full Moon Festival", "Tazaungdaing Festival", "Hanami"], answer: 1, exp: "Water is poured on Bodhi trees during the Kason Full Moon Festival." },
+
+    // INDIA
+    { q: "What is the official name of India?", options: ["Republic of India", "Union of India", "Democratic India", "Federal India"], answer: 0, exp: "Official name: Republic of India." },
+    { q: "What is the capital city of India?", options: ["Mumbai", "New Delhi", "Agra", "Jaipur"], answer: 1, exp: "New Delhi is the capital of India." },
+    { q: "What is the largest city in India?", options: ["New Delhi", "Mumbai", "Jaipur", "Gujarat"], answer: 1, exp: "Mumbai is the largest city in India." },
+    { q: "What is the currency of India?", options: ["Rupiah", "Indian Rupee", "Kyat", "Baht"], answer: 1, exp: "India uses the Indian Rupee." },
+    { q: "What type of government structure does India operate under?", options: ["Presidential Republic", "Federal Parliamentary Democratic Republic", "Constitutional Monarchy", "Socialist Republic"], answer: 1, exp: "India is a Federal Parliamentary Democratic Republic." },
+    { q: "In which city is the white marble Taj Mahal located?", options: ["Jaipur", "Agra", "Mumbai", "New Delhi"], answer: 1, exp: "The Taj Mahal is located in Agra, India." },
+    { q: "Which Indian city is widely known as the 'Pink City' for its colorful architecture?", options: ["Mumbai", "Jaipur", "Agra", "Gujarat"], answer: 1, exp: "Jaipur is known as the 'Pink City'." },
+    { q: "Where is the massive Statue of Unity (one of the tallest in the world) located?", options: ["Agra", "Gujarat", "Jaipur", "Mumbai"], answer: 1, exp: "The Statue of Unity is located in Gujarat, India." },
+    { q: "Which festival of lights is celebrated with oil lamps called diyas to symbolize light over darkness?", options: ["Holi", "Diwali", "Pongal", "Songkran"], answer: 1, exp: "Diwali is the festival of lights celebrated with diyas." },
+    { q: "Which four-day harvest festival in India is marked by cooking a special rice dish?", options: ["Diwali", "Pongal", "Holi", "Nyepi"], answer: 1, exp: "Pongal is a four-day harvest festival." },
+    { q: "Which joyful spring festival in India is celebrated by throwing colored powders and water?", options: ["Diwali", "Holi", "Pongal", "Songkran"], answer: 1, exp: "Holi is the festival of colors." }
 ];
 
 let currentQ = 0;
@@ -351,10 +479,10 @@ function showResults() {
     
     const pct = (score / quizData.length) * 100;
     let msg = "";
-    if (pct === 100) msg = "Perfect score! Outstanding job!";
-    else if (pct >= 80) msg = "Great job! You have mastered most of the material.";
-    else if (pct >= 60) msg = "Good effort! A little more review will make it perfect.";
-    else msg = "Keep practicing! Review the material and try again.";
+    if (pct === 100) msg = "Perfect score! You mastered the entire reviewer!";
+    else if (pct >= 85) msg = "Excellent job! You're completely ready for the exam.";
+    else if (pct >= 70) msg = "Great effort! A quick review will make your score perfect.";
+    else msg = "Good start! Go over the reviewer notes once more and try again.";
     
     document.getElementById("feedback-message").innerText = msg;
 }
