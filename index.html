@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.L.E. Interactive Review Quiz (1-50)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --correct: #16a34a;
+            --incorrect: #dc2626;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            background-color: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 650px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background-color: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.95rem;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background-color: #eff6ff;
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct);
+            background-color: #f0fdf4;
+            color: var(--correct);
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect);
+            background-color: #fef2f2;
+            color: var(--incorrect);
+            font-weight: 600;
+        }
+
+        .feedback {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            display: block;
+            background-color: #f0fdf4;
+            color: var(--correct);
+            border: 1px solid #bbf7d0;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background-color: #fef2f2;
+            color: var(--incorrect);
+            border: 1px solid #fecaca;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .next-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .results {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .results h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 16px 0;
+        }
+
+        .restart-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="header">
+        <div class="title">T.L.E. Reviewer Interactive Quiz</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+        <div class="stats">
+            <span id="question-count">Question 1 of 50</span>
+            <span id="score-count">Score: 0</span>
+        </div>
+    </div>
+
+    <div id="quiz-body">
+        <div class="question-text" id="question"></div>
+        <div class="options-grid" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="controls">
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question</button>
+        </div>
+    </div>
+
+    <div id="results-body" class="results" style="display: none;">
+        <h2>Quiz Completed!</h2>
+        <p>Your final score is:</p>
+        <div class="score-display" id="final-score">0 / 50</div>
+        <p id="feedback-message"></p>
+        <button class="restart-btn" onclick="restartQuiz()">Try Again</button>
+    </div>
+</div>
+
+<script>
+const quizData = [
+    { q: "What field of study teaches knowledge, skills, attitudes, and values needed to manage everyday life?", options: ["Social Studies", "Family and Consumer Science", "Economics", "Health Education"], answer: 1, exp: "Family and Consumer Science is an area of study that teaches students how to manage everyday life and improve quality of life." },
+    { q: "What is ecotourism primarily focused on?", options: ["Shopping and local food", "Nature conservation and community well-being", "Outdoor extreme sports", "Luxury resort stays"], answer: 1, exp: "Ecotourism protects the environment, focuses on nature conservation, and improves the well-being of local communities." },
+    { q: "Travelling to experience the culture, traditions, and way of life of local people is called:", options: ["Adventure Tourism", "Ecotourism", "Cultural Tourism", "Domestic Tourism"], answer: 2, exp: "Cultural Tourism focuses on experiencing traditions, history, arts, and local customs." },
+    { q: "What component of tourism is known as the 'why' of travel?", options: ["Accessibility", "Accommodation", "Amenities", "Attraction"], answer: 3, exp: "Attractions are the primary drivers that motivate a tourist to leave home." },
+    { q: "Beaches, mountains, and lakes fall under which attraction type?", options: ["Man-made", "Natural", "Event-based", "Cultural"], answer: 1, exp: "Natural attractions include geographic features like beaches, mountains, and lakes." },
+    { q: "Which service characteristic means services cannot be seen, touched, or stored?", options: ["Inseparability", "Intangibility", "Variability", "Perishability"], answer: 1, exp: "Intangibility refers to services that cannot be seen, touched, or stored." },
+    { q: "Which characteristic refers to how service quality may vary depending on the provider or situation?", options: ["Variability", "Perishability", "Intangibility", "Inseparability"], answer: 0, exp: "Variability means the quality of service varies depending on circumstances and providers." },
+    { q: "During which historical period were tourism activities in the Philippines completely stopped due to war?", options: ["Spanish Colonial Period", "American Period", "Pre-colonial Period", "Japanese Occupation"], answer: 3, exp: "During the Japanese Occupation, tourism activities stopped because of war and damaged infrastructure." },
+    { q: "When was the Department of Tourism created?", options: ["June 12, 1898", "May 11, 1973", "October 23, 1953", "September 15, 1898"], answer: 1, exp: "The Department of Tourism was created on May 11, 1973, by President Ferdinand Marcos Sr." },
+    { q: "Which ancient vessel served as the backbone for inter-island trade in early Philippine travel?", options: ["Galleon", "Tranvia", "Balangay", "Calesa"], answer: 2, exp: "Balangay served as the backbone for inter-island trade in early travel." },
+    { q: "What were the Manila-Acapulco Galleons used for?", options: ["Transporting luxury goods between the Philippines and Mexico", "Ocean voyages to navigate by stars", "Inter-city public transit in Manila", "Carrying military troops during WWII"], answer: 0, exp: "Galleons transported luxury goods between the Philippines and Mexico." },
+    { q: "What was the electric streetcar system operated by MERALCO called?", options: ["Calesa", "Tranvia", "Manila-Dagupan Railway", "Balangay"], answer: 1, exp: "Tranvia was an electric streetcar system operated by the Manila Electric Rail and Light Company." },
+    { q: "Which historic walled city was founded in 1571?", options: ["Vigan", "Bagumbayan", "Intramuros", "Malolos"], answer: 2, exp: "Intramuros is the historic walled city founded in 1571." },
+    { q: "Paoay Church is formally known as:", options: ["Our Lady of Mount Carmel Parish", "Church of Saint Augustine", "San Agustin Basilica", "Manila Cathedral"], answer: 1, exp: "Paoay Church is formally known as the Church of Saint Augustine." },
+    { q: "Luneta Park was formerly known as:", options: ["Calle Crisologo", "Corregidor", "Bagumbayan", "Malolos"], answer: 2, exp: "Luneta Park was historically known as Bagumbayan." },
+    { q: "Which historic location has the nickname 'Cradle of Democracy in the East'?", options: ["Barasoain Church", "Intramuros", "Corregidor Island", "Luneta Park"], answer: 0, exp: "Barasoain Church in Malolos holds the title 'Cradle of Democracy in the East'." },
+    { q: "Calle Crisologo in Vigan is known for being:", options: ["The site of the first Philippine Republic", "The best-preserved example of a planned Spanish colonial town in Asia", "A fortress guarding Manila Bay", "A modern entertainment street"], answer: 1, exp: "Calle Crisologo is famous for being the best-preserved example of a planned Spanish colonial town in Asia." },
+    { q: "Corregidor Island surrendered to Japanese troops in which month and year?", options: ["December 1896", "January 1899", "May 1942", "July 1946"], answer: 2, exp: "Japanese troops forced the surrender of Corregidor Island in May 1942." },
+    { q: "Why do the Chocolate Hills in Bohol turn brown?", options: ["Volcanic ash coverage", "During the dry season", "Seasonal mud runoff", "Sun exposure during summer solstice"], answer: 1, exp: "The grass covering the Chocolate Hills turns brown during the dry season." },
+    { q: "What is the Puerto Princesa Underground River's key geographic feature?", options: ["Symmetrical stratovolcano cone", "Subterranean river system", "Nested island-in-a-lake", "Archipelago of 123 islands"], answer: 1, exp: "It features a remarkable subterranean river system." },
+    { q: "How many islands make up the Hundred Islands National Park at high tide?", options: ["100", "123", "124", "150"], answer: 1, exp: "It is composed of 123 islands at high tide (and 124 at low tide)." },
+    { q: "Philippines Independence Day was proclaimed by General Emilio Aguinaldo in Kawit, Cavite on:", options: ["July 4, 1946", "May 11, 1973", "June 12, 1898", "September 15, 1898"], answer: 2, exp: "Independence from Spanish colonial rule was proclaimed on June 12, 1898." },
+    { q: "When was television officially introduced in the Philippines with DZAQ-TV Channel 3?", options: ["October 23, 1953", "July 4, 1946", "June 27, 2023", "May 11, 1973"], answer: 0, exp: "Television was introduced on October 23, 1953 via DZAQ-TV Channel 3." },
+    { q: "Which government agency collects travel tax and manages tourism enterprise zones?", options: ["Tourism Promotions Board (TPB)", "Department of Transportation (DOTr)", "Intramuros Administration (IA)", "Tourism Infrastructure and Enterprise Zone Authority (TIEZA)"], answer: 3, exp: "TIEZA collects travel tax and develops tourism enterprise zones." },
+    { q: "Which agency promotes Philippine tourism internationally and manages marketing campaigns?", options: ["Local Government Units (LGUs)", "Tourism Promotions Board (TPB)", "Bureau of Immigration", "NCCA"], answer: 1, exp: "The Tourism Promotions Board (TPB) markets the Philippines internationally." },
+    { q: "A personal assistant for hotel guests who assists with information and requests is a:", options: ["Concierge", "Bell Boy", "Front Desk Officer", "Steward"], answer: 0, exp: "A Concierge provides information and acts as a personal assistant for hotel guests." },
+    { q: "Who is the head officer in command of a cruise ship?", options: ["Deck Officer", "Captain", "Chief Engineer", "Steward"], answer: 1, exp: "The Captain commands the ship." },
+    { q: "Who manages, preserves, and organizes collections of historical objects and artworks in a museum?", options: ["Tour Operator", "Event Coordinator", "Museum Curator", "Ticketing Officer"], answer: 2, exp: "A Museum Curator manages and preserves museum collections." },
+    { q: "What is the official currency of Indonesia?", options: ["Baht", "Rupiah", "Yuan", "Kyat"], answer: 1, exp: "The official currency of Indonesia is the Indonesian Rupiah." },
+    { q: "Which temple in Central Java is recognized as the largest Buddhist temple in the world?", options: ["Fushimi Inari", "Shwedagon Pagoda", "Borobudur Temple", "Taj Mahal"], answer: 2, exp: "Borobudur Temple in Central Java is the largest Buddhist temple in the world." },
+    { q: "What is the centerpiece animal of Komodo National Park?", options: ["Komodo Dragon", "Asian Elephant", "Bengal Tiger", "Giant Panda"], answer: 0, exp: "The Komodo Dragon is the centerpiece species of Komodo National Park." },
+    { q: "What is practiced during the Hindu New Year festival of Nyepi in Bali?", options: ["Water fights", "Dragon boat racing", "Practice of silence", "Lantern flying"], answer: 2, exp: "Nyepi is known as the 'Day of Silence' where people practice silence." },
+    { q: "What is the capital city of Thailand?", options: ["Jakarta", "Bangkok", "Beijing", "Naypyidaw"], answer: 1, exp: "Bangkok (Krung Thep Maha Nakhon) is the capital of Thailand." },
+    { q: "What is the traditional Thai greeting called?", options: ["Wai", "Zongzi", "Hanami", "Diyas"], answer: 0, exp: "The Wai is performed by placing palms together and slightly bowing." },
+    { q: "Which island is known as the 'Pearl of the Andaman'?", options: ["Bali", "Phuket", "Shikoku", "Inle Lake"], answer: 1, exp: "Phuket is Thailand's largest island and is referred to as the 'Pearl of the Andaman'." },
+    { q: "The Grand Palace in Bangkok was built in 1782 by:", options: ["Father Antonio Estravillo", "King Rama I", "Emperor Qin Shi Huang", "Antonio Quirino"], answer: 1, exp: "The Grand Palace was built in 1782 by King Rama I." },
+    { q: "Songkran is a famous festival in Thailand celebrated every April to welcome:", options: ["The Autumn Harvest", "The Thai New Year", "The Monsoon Season", "The Lunar New Year"], answer: 1, exp: "Songkran is a water festival celebrated in April to welcome the Thai New Year." },
+    { q: "What is the official language of China?", options: ["Cantonese", "Standard Mandarin Chinese", "Hokkien", "Taiwanese"], answer: 1, exp: "The official language of China is Standard Mandarin Chinese." },
+    { q: "How many life-sized clay soldiers were built in the Terracotta Army to guard Qin Shi Huang's tomb?", options: ["More than 1,000", "More than 5,000", "More than 8,000", "More than 12,000"], answer: 2, exp: "The Terracotta Army consists of more than 8,000 life-sized clay soldiers." },
+    { q: "What traditional food item is eaten during the Dragon Boat Festival?", options: ["Pongal", "Zongzi", "Sushi", "Kimchi"], answer: 1, exp: "Zongzi (sticky rice dumplings) are traditional during the Dragon Boat Festival." },
+    { q: "What are the four main islands of Japan?", options: ["Honshu, Hokkaido, Kyushu, Shikoku", "Tokyo, Kyoto, Hiroshima, Osaka", "Bali, Java, Sumatra, Komodo", "Luzon, Visayas, Mindanao, Palawan"], answer: 0, exp: "Japan's four main islands are Honshu, Hokkaido, Kyushu, and Shikoku." },
+    { q: "Which iconic Japanese shrine in Kyoto is famous for thousands of red torii gates?", options: ["Borobudur", "Fushimi Inari Taisha", "Shwedagon Pagoda", "Barasoain"], answer: 1, exp: "Fushimi Inari Taisha in Kyoto is famous for its thousands of bright red torii gates." },
+    { q: "What seasonal activity is celebrated during the Hanami Festival in Japan?", options: ["Hot-air balloon flying", "Viewing blooming cherry blossoms", "Floating lanterns on rivers", "Throwing colored powders"], answer: 1, exp: "Hanami is a spring tradition centered on viewing blooming cherry blossoms." },
+    { q: "What is the official capital of Myanmar?", options: ["Yangon", "Mandalay", "Naypyidaw", "New Delhi"], answer: 2, exp: "Naypyidaw is the official capital of Myanmar." },
+    { q: "Which famous pagoda in Myanmar is covered in pure gold?", options: ["Borobudur", "Shwedagon Pagoda", "Fushimi Inari", "Taj Mahal"], answer: 1, exp: "Shwedagon Pagoda in Yangon is covered in pure gold." },
+    { q: "During the Tazaungdaing Festival in Myanmar, people celebrate with:", options: ["Hot-air balloons", "Water splashing", "Dragon races", "Clay statues"], answer: 0, exp: "The Tazaungdaing Festival features hot-air balloons." },
+    { q: "What type of government structure does India operate under?", options: ["Constitutional Monarchy", "Socialist Republic", "Federal Parliamentary Democratic Republic", "Presidential Republic under military rule"], answer: 2, exp: "India is a Federal Parliamentary Democratic Republic." },
+    { q: "In which Indian city is the white marble Taj Mahal located?", options: ["Jaipur", "Agra", "Mumbai", "Gujarat"], answer: 1, exp: "The Taj Mahal is located in Agra, India." },
+    { q: "Jaipur, India is widely known as the:", options: ["City of Angels", "Island of the Gods", "Pink City", "Pearl of the Orient"], answer: 2, exp: "Jaipur is known as the 'Pink City' for its colorful architecture." },
+    { q: "What traditional items are lit during Diwali, the festival of lights?", options: ["Diyas", "Torii", "Zongzi", "Krathong"], answer: 0, exp: "Diwali is celebrated by lighting lamps called diyas." }
+];
+
+let currentQ = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+    answered = false;
+    const qData = quizData[currentQ];
+    
+    document.getElementById("question-count").innerText = `Question ${currentQ + 1} of ${quizData.length}`;
+    document.getElementById("score-count").innerText = `Score: ${score}`;
+    document.getElementById("progress").style.width = `${((currentQ) / quizData.length) * 100}%`;
+    
+    document.getElementById("question").innerText = `${currentQ + 1}. ${qData.q}`;
+    
+    const optionsContainer = document.getElementById("options");
+    optionsContainer.innerHTML = "";
+    
+    qData.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.innerText = `${String.fromCharCode(65 + idx)}) ${opt}`;
+        btn.onclick = () => selectOption(idx);
+        optionsContainer.appendChild(btn);
+    });
+    
+    const feedback = document.getElementById("feedback");
+    feedback.style.display = "none";
+    feedback.className = "feedback";
+    
+    document.getElementById("next-btn").style.display = "none";
+}
+
+function selectOption(selectedIdx) {
+    if (answered) return;
+    answered = true;
+    
+    const qData = quizData[currentQ];
+    const buttons = document.querySelectorAll(".option-btn");
+    const feedback = document.getElementById("feedback");
+    
+    buttons.forEach(btn => btn.disabled = true);
+    
+    if (selectedIdx === qData.answer) {
+        score++;
+        buttons[selectedIdx].classList.add("correct");
+        feedback.className = "feedback correct";
+        feedback.innerText = `Correct! ${qData.exp}`;
+    } else {
+        buttons[selectedIdx].classList.add("incorrect");
+        buttons[qData.answer].classList.add("correct");
+        feedback.className = "feedback incorrect";
+        feedback.innerText = `Incorrect. ${qData.exp}`;
+    }
+    
+    document.getElementById("score-count").innerText = `Score: ${score}`;
+    document.getElementById("next-btn").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQ++;
+    if (currentQ < quizData.length) {
+        loadQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById("quiz-body").style.display = "none";
+    document.getElementById("results-body").style.display = "block";
+    document.getElementById("progress").style.width = "100%";
+    document.getElementById("final-score").innerText = `${score} / ${quizData.length}`;
+    
+    const pct = (score / quizData.length) * 100;
+    let msg = "";
+    if (pct === 100) msg = "Perfect score! Outstanding job!";
+    else if (pct >= 80) msg = "Great job! You have mastered most of the material.";
+    else if (pct >= 60) msg = "Good effort! A little more review will make it perfect.";
+    else msg = "Keep practicing! Review the material and try again.";
+    
+    document.getElementById("feedback-message").innerText = msg;
+}
+
+function restartQuiz() {
+    currentQ = 0;
+    score = 0;
+    document.getElementById("quiz-body").style.display = "block";
+    document.getElementById("results-body").style.display = "none";
+    loadQuestion();
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
